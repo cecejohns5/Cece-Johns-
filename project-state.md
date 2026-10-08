@@ -3,7 +3,7 @@ Last updated: October 8, 2026
 
 ## Works
 - Live Next.js site (App Router, TypeScript, plain CSS) deployed on Vercel at https://cece-johns.vercel.app.
-- GitHub repo cecejohns5/AI-Workshop, default branch main. Merging to main deploys the live site.
+- GitHub repo cecejohns5/Cece-Johns-, default branch main. Merging to main deploys the live site.
 - Supabase project created at https://grmbdaajxpvxccajjgsc.supabase.co and linked to the repo. The site does not use it yet.
 
 ## Broken or flaky
