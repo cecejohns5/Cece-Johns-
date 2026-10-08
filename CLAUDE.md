@@ -8,8 +8,8 @@
 ## Commands
 - npm run dev: run the site locally
 - npm run build: check the site builds
-- npm run lint: check code style
-(Confirm these against package.json before relying on them.)
+- npm run lint: check code style (ESLint with the Next.js rules, set up in eslint.config.mjs)
+(All three are defined in package.json.)
 
 ## Never
 - Add a dependency without asking first.
