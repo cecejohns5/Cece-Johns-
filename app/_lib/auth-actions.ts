@@ -10,8 +10,11 @@ function readForm(formData: FormData) {
   };
 }
 
+const notSetUp = "Sign-in is not set up yet.";
+
 export async function signUp(formData: FormData) {
   const supabase = await createClient();
+  if (!supabase) redirect(`/signup?error=${encodeURIComponent(notSetUp)}`);
   const { error } = await supabase.auth.signUp(readForm(formData));
 
   if (error) {
@@ -22,6 +25,7 @@ export async function signUp(formData: FormData) {
 
 export async function logIn(formData: FormData) {
   const supabase = await createClient();
+  if (!supabase) redirect(`/login?error=${encodeURIComponent(notSetUp)}`);
   const { error } = await supabase.auth.signInWithPassword(readForm(formData));
 
   if (error) {
@@ -32,6 +36,6 @@ export async function logIn(formData: FormData) {
 
 export async function logOut() {
   const supabase = await createClient();
-  await supabase.auth.signOut();
+  await supabase?.auth.signOut();
   redirect("/");
 }

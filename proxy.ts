@@ -5,10 +5,15 @@ import { NextResponse, type NextRequest } from "next/server";
 // logged-in visitor stays logged in when their short-lived token expires.
 export default async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+
+  // Without the Supabase settings there is no sign-in to refresh.
+  if (!supabaseUrl || !supabaseKey) return response;
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+    supabaseUrl,
+    supabaseKey,
     {
       cookies: {
         getAll() {
