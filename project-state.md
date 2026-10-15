@@ -14,8 +14,8 @@ Last updated: October 15, 2026
 - None known.
 
 ## Environment notes
-- Supabase keys belong only in Vercel > Settings > Environment Variables. It is not yet confirmed whether they are set there.
-- Supabase may require email confirmation on sign-up by default. Not yet checked.
+- Supabase keys belong only in Vercel > Settings > Environment Variables. They are set there, since sign-in works on the live site.
+- Supabase requires email confirmation on sign-up: a new account must click the link in its confirmation email before it is signed in.
 - Every pushed branch gets a Vercel preview link on its pull request.
 
 ## Next session
