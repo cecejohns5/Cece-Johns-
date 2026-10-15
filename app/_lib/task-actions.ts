@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "./supabase";
 import { SKILLS } from "./skills";
+import { isValidDate } from "./due-dates";
 
 // Sends the visitor back to the home page, showing one list and,
 // if something went wrong, a short error message.
@@ -39,9 +40,9 @@ export async function addList(formData: FormData) {
   backTo(data.id);
 }
 
-// Adds a task to one of the signed-in visitor's lists, then shows that
-// list. Supabase fills in user_id itself, and refuses a list that belongs
-// to another account.
+// Adds a task, with an optional due date, to one of the signed-in
+// visitor's lists, then shows that list. Supabase fills in user_id itself,
+// and refuses a list that belongs to another account.
 export async function addTask(formData: FormData) {
   const supabase = await createClient();
   if (!supabase) redirect("/");
@@ -49,14 +50,18 @@ export async function addTask(formData: FormData) {
   const title = String(formData.get("title") ?? "").trim();
   const skill = String(formData.get("skill") ?? "");
   const listId = readListId(formData);
+  const dueDate = String(formData.get("due_date") ?? "");
   if (!listId) backTo(null, "Choose a list.");
   if (!title || !SKILLS.includes(skill)) {
     backTo(listId, "Type a task and choose a skill.");
   }
+  if (dueDate && !isValidDate(dueDate)) {
+    backTo(listId, "Pick a due date from the calendar, or leave it empty.");
+  }
 
   const { error } = await supabase
     .from("tasks")
-    .insert({ title, skill, list_id: listId });
+    .insert({ title, skill, list_id: listId, due_date: dueDate || null });
   if (error) backTo(listId, "Could not add the task.");
 
   revalidatePath("/");

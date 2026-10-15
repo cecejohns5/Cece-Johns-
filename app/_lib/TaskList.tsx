@@ -3,6 +3,7 @@ import { createClient } from "./supabase";
 import { addList, addTask, setDone } from "./task-actions";
 import { SKILLS } from "./skills";
 import DoneBox from "./DoneBox";
+import { formatDueDate, isOverdue } from "./due-dates";
 
 // The signed-in visitor's study tasks, one list at a time, with a menu of
 // their lists and forms to add a list or a task.
@@ -35,8 +36,10 @@ export default async function TaskList({
   const { data: tasks } = current
     ? await supabase
         .from("tasks")
-        .select("id, title, skill, done")
+        .select("id, title, skill, done, due_date")
         .eq("list_id", current.id)
+        // Soonest due first; tasks with no due date go to the bottom.
+        .order("due_date", { ascending: true, nullsFirst: false })
         .order("created_at")
     : { data: [] };
 
@@ -95,6 +98,7 @@ export default async function TaskList({
                 <option key={skill}>{skill}</option>
               ))}
             </select>
+            <input type="date" name="due_date" aria-label="Due date" />
             <select
               name="list_id"
               required
@@ -112,20 +116,33 @@ export default async function TaskList({
 
           {tasks && tasks.length > 0 ? (
             <ul className="task-list">
-              {tasks.map((task) => (
-                <li
-                  key={task.id}
-                  className={task.done ? "task-done" : undefined}
-                >
-                  <form action={setDone}>
-                    <input type="hidden" name="id" value={task.id} />
-                    <input type="hidden" name="list_id" value={current.id} />
-                    <DoneBox done={task.done} />
-                  </form>
-                  <span className="task-title">{task.title}</span>
-                  <span className="skill-tag">{task.skill}</span>
-                </li>
-              ))}
+              {tasks.map((task) => {
+                const overdue = isOverdue(task.due_date, task.done);
+                const rowClass = task.done
+                  ? "task-done"
+                  : overdue
+                    ? "task-overdue"
+                    : undefined;
+                return (
+                  <li key={task.id} className={rowClass}>
+                    <form action={setDone}>
+                      <input type="hidden" name="id" value={task.id} />
+                      <input type="hidden" name="list_id" value={current.id} />
+                      <DoneBox done={task.done} />
+                    </form>
+                    <span className="task-title">{task.title}</span>
+                    {task.due_date && (
+                      <span className="due-date">
+                        {overdue && (
+                          <strong className="overdue-tag">Overdue</strong>
+                        )}
+                        Due {formatDueDate(task.due_date)}
+                      </span>
+                    )}
+                    <span className="skill-tag">{task.skill}</span>
+                  </li>
+                );
+              })}
             </ul>
           ) : (
             <p>No tasks in this list yet. Add one above.</p>

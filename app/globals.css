@@ -219,3 +219,33 @@ h3 {
   margin: 0 0 0.5rem;
   color: var(--accent);
 }
+
+.due-date {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.task-overdue {
+  padding: 0.2rem 0.4rem;
+  border-left: 4px solid #b00020;
+  background: #fdecee;
+}
+
+.task-overdue .task-title,
+.task-overdue .due-date {
+  color: #b00020;
+}
+
+.overdue-tag {
+  padding: 0.05rem 0.5rem;
+  border-radius: 999px;
+  background: #b00020;
+  color: #ffffff;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
