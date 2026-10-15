@@ -16,7 +16,8 @@
 - Edit .env or any environment variable.
 - Change auth configuration without saying what is changing and why.
 - Create new top-level folders.
-- Merge a pull request. Push the branch, open a draft pull request, and stop.
+- Merge a pull request that changes anything other than roadmap.md and project-state.md until Cece has tested its Vercel preview link and said it passed. Until then, push the branch, open a draft pull request, and stop.
+- (Pull requests that change only roadmap.md and/or project-state.md are merged right away, without waiting for Cece.)
 - Put passwords, API keys, or connection strings in code, prompts, or any file in the repo. They go in Vercel > Settings > Environment Variables only.
 - Use real personal data. Fake names and fake content only.
 - Edit roadmap.md, project-state.md, or CLAUDE.md during feature work. Only a dedicated docs session edits them.
