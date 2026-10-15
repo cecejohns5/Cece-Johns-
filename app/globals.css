@@ -192,3 +192,30 @@ select {
   color: var(--accent);
   font-size: 0.8rem;
 }
+
+.list-menu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.list-menu a[aria-current="page"] {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.new-list summary {
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.new-list .task-form {
+  margin: 0.5rem 0 0;
+}
+
+h3 {
+  margin: 0 0 0.5rem;
+  color: var(--accent);
+}

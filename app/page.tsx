@@ -3,9 +3,9 @@ import TaskList from "./_lib/TaskList";
 export default async function Home({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; list?: string }>;
 }) {
-  const { error } = await searchParams;
+  const { error, list } = await searchParams;
   return (
     <>
       <header className="hero">
@@ -14,7 +14,7 @@ export default async function Home({
       </header>
 
       <main>
-        <TaskList error={error} />
+        <TaskList error={error} listId={list} />
 
         <section>
           <h2>About</h2>
