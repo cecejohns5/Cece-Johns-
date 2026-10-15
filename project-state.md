@@ -8,10 +8,10 @@ Last updated: October 15, 2026
 - If they try to log in with the wrong password, they see an error message and stay logged out. With the right password, they are signed in.
 - Live Next.js site (App Router, TypeScript, plain CSS) deployed on Vercel at https://cece-johns.vercel.app.
 - GitHub repo cecejohns5/Cece-Johns-, default branch main. Merging to main deploys the live site.
-- Supabase project created at https://grmbdaajxpvxccajjgsc.supabase.co and linked to the repo. The site does not use it yet.
+- Supabase project at https://grmbdaajxpvxccajjgsc.supabase.co is linked to the repo. The site uses it for sign-up, log-in, and log-out.
 
 ## Broken or flaky
-- None known. Not yet checked.
+- None known.
 
 ## Environment notes
 - Supabase keys belong only in Vercel > Settings > Environment Variables. It is not yet confirmed whether they are set there.
@@ -19,5 +19,4 @@ Last updated: October 15, 2026
 - Every pushed branch gets a Vercel preview link on its pull request.
 
 ## Next session
-- Start Slice 1, Sign up and log in.
-- Open question: are the Supabase URL and public key already set in Vercel's environment variables?
+- Start Slice 2, Tasks that stay.
