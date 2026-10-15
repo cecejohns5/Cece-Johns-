@@ -1,4 +1,11 @@
-export default function Home() {
+import TaskList from "./_lib/TaskList";
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const { error } = await searchParams;
   return (
     <>
       <header className="hero">
@@ -7,6 +14,8 @@ export default function Home() {
       </header>
 
       <main>
+        <TaskList error={error} />
+
         <section>
           <h2>About</h2>
           <p>
