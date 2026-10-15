@@ -6,9 +6,13 @@ Last updated: October 15, 2026
 - After signing up, they get a confirmation email, and clicking its link signs them in. The page then shows "Signed in as" followed by their email.
 - They can click Log out, and the page goes back to showing a Log in link with no email.
 - If they try to log in with the wrong password, they see an error message and stay logged out. With the right password, they are signed in.
+- When signed in, they see a My study tasks section on the home page. They can type a task, choose Reading, Writing, Listening, or Speaking, and click Add; the task appears with its skill label.
+- They can tick a task's Done box. It stays ticked after a refresh, and the task is crossed out.
+- Their tasks are still there after they log out, close the browser, and log back in.
+- Each account sees only its own tasks. A second account does not see the first account's tasks.
 - Live Next.js site (App Router, TypeScript, plain CSS) deployed on Vercel at https://cece-johns.vercel.app.
 - GitHub repo cecejohns5/Cece-Johns-, default branch main. Merging to main deploys the live site.
-- Supabase project at https://grmbdaajxpvxccajjgsc.supabase.co is linked to the repo. The site uses it for sign-up, log-in, and log-out.
+- Supabase project at https://grmbdaajxpvxccajjgsc.supabase.co is linked to the repo. The site uses it for sign-up, log-in, and log-out, and stores study tasks in its tasks table.
 
 ## Broken or flaky
 - None known.
@@ -19,4 +23,4 @@ Last updated: October 15, 2026
 - Every pushed branch gets a Vercel preview link on its pull request.
 
 ## Next session
-- Start Slice 2, Tasks that stay.
+- Start Slice 3, Skill balance.
