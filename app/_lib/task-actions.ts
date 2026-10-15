@@ -5,24 +5,62 @@ import { redirect } from "next/navigation";
 import { createClient } from "./supabase";
 import { SKILLS } from "./skills";
 
-// Adds a task for whoever is signed in. Supabase fills in user_id itself,
-// and its rules refuse a task saved under anyone else's account.
+// Sends the visitor back to the home page, showing one list and,
+// if something went wrong, a short error message.
+function backTo(listId: number | null, error?: string): never {
+  const params = new URLSearchParams();
+  if (listId) params.set("list", String(listId));
+  if (error) params.set("error", error);
+  const query = params.toString();
+  redirect(query ? `/?${query}` : "/");
+}
+
+function readListId(formData: FormData) {
+  const listId = Number(formData.get("list_id"));
+  return Number.isInteger(listId) && listId > 0 ? listId : null;
+}
+
+// Makes a new list for whoever is signed in, then shows it.
+export async function addList(formData: FormData) {
+  const supabase = await createClient();
+  if (!supabase) redirect("/");
+
+  const name = String(formData.get("name") ?? "").trim();
+  if (!name) backTo(null, "Type a name for the list.");
+
+  const { data, error } = await supabase
+    .from("lists")
+    .insert({ name })
+    .select("id")
+    .single();
+  if (error || !data) backTo(null, "Could not make the list.");
+
+  revalidatePath("/");
+  backTo(data.id);
+}
+
+// Adds a task to one of the signed-in visitor's lists, then shows that
+// list. Supabase fills in user_id itself, and refuses a list that belongs
+// to another account.
 export async function addTask(formData: FormData) {
   const supabase = await createClient();
   if (!supabase) redirect("/");
 
   const title = String(formData.get("title") ?? "").trim();
   const skill = String(formData.get("skill") ?? "");
+  const listId = readListId(formData);
+  if (!listId) backTo(null, "Choose a list.");
   if (!title || !SKILLS.includes(skill)) {
-    redirect("/?error=Type%20a%20task%20and%20choose%20a%20skill.");
+    backTo(listId, "Type a task and choose a skill.");
   }
 
-  const { error } = await supabase.from("tasks").insert({ title, skill });
-  if (error) {
-    redirect("/?error=Could%20not%20add%20the%20task.");
-  }
+  const { error } = await supabase
+    .from("tasks")
+    .insert({ title, skill, list_id: listId });
+  if (error) backTo(listId, "Could not add the task.");
+
   revalidatePath("/");
-  redirect("/");
+  backTo(listId);
 }
 
 // Ticks or unticks a task's Done box. Supabase only lets an account change
@@ -33,11 +71,11 @@ export async function setDone(formData: FormData) {
 
   const id = Number(formData.get("id"));
   const done = formData.get("done") === "on";
+  const listId = readListId(formData);
 
   const { error } = await supabase.from("tasks").update({ done }).eq("id", id);
-  if (error) {
-    redirect("/?error=Could%20not%20save%20that%20change.");
-  }
+  if (error) backTo(listId, "Could not save that change.");
+
   revalidatePath("/");
-  redirect("/");
+  backTo(listId);
 }
