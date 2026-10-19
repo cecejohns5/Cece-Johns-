@@ -1,10 +1,11 @@
 :root {
-  --accent: #0f5257;
-  --accent-hover: #0a3a3e;
+  --accent: #0b6a8f;
+  --accent-hover: #08506c;
+  --accent-soft: #d9f5e4;
   --text: #333333;
   --muted: #666666;
-  --background: #fdfdfd;
-  --border: #e5e5e5;
+  --background: #fbf3e4;
+  --border: #e8d9bf;
 }
 
 *,
@@ -189,6 +190,7 @@ select {
   padding: 0.1rem 0.5rem;
   border: 1px solid var(--accent);
   border-radius: 999px;
+  background: var(--accent-soft);
   color: var(--accent);
   font-size: 0.8rem;
 }
