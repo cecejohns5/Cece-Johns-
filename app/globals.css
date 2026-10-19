@@ -249,3 +249,64 @@ h3 {
   color: #ffffff;
   font-size: 0.75rem;
 }
+
+.tab-bar {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-bar a {
+  flex: 1;
+  padding: 0.6rem 0.5rem;
+  border-bottom: 3px solid transparent;
+  color: var(--muted);
+  text-align: center;
+  text-decoration: none;
+}
+
+.tab-bar a:hover {
+  color: var(--accent);
+}
+
+.tab-bar a[aria-current="page"] {
+  border-bottom-color: var(--accent);
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.account-links {
+  display: flex;
+  gap: 1rem;
+}
+
+/* On a phone, the tabs stick to the bottom of the screen like an app. */
+@media (max-width: 600px) {
+  body {
+    padding-bottom: 5rem;
+  }
+
+  .tab-bar {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: none;
+    background: var(--background);
+  }
+
+  .tab-bar a {
+    padding: 0.9rem 0.25rem;
+    border-top: 3px solid transparent;
+    border-bottom: none;
+    font-size: 0.85rem;
+  }
+
+  .tab-bar a[aria-current="page"] {
+    border-top-color: var(--accent);
+  }
+}
