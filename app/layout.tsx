@@ -4,8 +4,9 @@ import AuthStatus from "./_lib/AuthStatus";
 import TabBar from "./_lib/TabBar";
 
 export const metadata: Metadata = {
-  title: "Cece Johns",
-  description: "I am a freshman at UH Manoa",
+  title: "Study Task List",
+  description:
+    "A study task list for language learners, by Cece Johns.",
 };
 
 export default function RootLayout({
